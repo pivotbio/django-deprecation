@@ -11,7 +11,7 @@ class WarnFunction(object):
         self.counter += 1
 
     def reset(self):
-        self.message = ''
+        self.message = ""
         self.counter = 0
 
 
@@ -21,7 +21,7 @@ DeprecatedField.warn = warn_function
 
 class Musician(models.Model):
     name = models.CharField(max_length=50)
-    title = DeprecatedField('name')
+    title = DeprecatedField("name")
 
     def __str__(self):
         return self.name
@@ -29,7 +29,16 @@ class Musician(models.Model):
 
 class Album(models.Model):
     artist = models.ForeignKey(Musician, on_delete=models.CASCADE)
-    musician = DeprecatedField('artist')
+    musician = DeprecatedField("artist")
 
     def __str__(self):
         return self.artist and self.artist.name
+
+
+class Label(models.Model):
+    """
+    A class where the deprecated field is pointing to a required field.
+    """
+
+    ticker = models.CharField(blank=False, null=False, max_length=50)
+    nyse = DeprecatedField("ticker")
